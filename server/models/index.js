@@ -18,6 +18,13 @@ if (config.use_env_variable) {
         require: true,
         rejectUnauthorized: false
       }
+    },
+    pool: {
+      max: 12, // maximum number of connections
+      min: 0, // minimum number of connections
+      acquire: 30000, // maximum time in ms to try getting a connection before throwing an error
+      idle: 20000, // maximum time in ms that a connection can be idle before being released
+      evict: 20000    // 10 seconds - run eviction checks every 10 seconds
     }
   });
 } else {
