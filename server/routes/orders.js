@@ -27,10 +27,14 @@ router.post("/submitOrder", validateToken, async (req, res) => {
       // check if fruit exists and check stock
       const fruit = await Fruits.findByPk(fruitsId, { transaction });
       if (!fruit) {
-        throw new Error(`Fruit not found`);
+        const error = new Error(`Fruit ${fruitsId} not found`);
+        error.statusCode = 404;
+        throw error;
       }
       if (fruit.stock < quantity) {
-        throw new Error(`Insufficient stock for ${fruit.name}`);
+        const error = new Error(`Insufficient stock for ${fruit.name}`);
+        error.statusCode = 400;
+        throw error;
       }
 
       // calculate the subtotal price of each type of fruit within the order
@@ -60,7 +64,8 @@ router.post("/submitOrder", validateToken, async (req, res) => {
   } catch (error) {
     // if there are errors while executing the order, rollback changes made to database
     await transaction.rollback();
-    res.status(500).json({ message: "An unexpected error occurred. Please try again later." });
+    const statusCode = error.statusCode || 500;
+    res.status(statusCode).json({ message: error.message || "An unexpected error occurred. Please try again later." });
   }
 });
 
