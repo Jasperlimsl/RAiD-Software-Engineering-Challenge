@@ -30,8 +30,6 @@ Story 11. As a customer, I want to be able to use the app on my phone so I can s
 
 Story 15. As an owner, I do not want my customers to be able to see the whole store's order history, or amend my stocks, or perform any actions that should only be available for me.
 
-Story 17. As a customer, I want the fruit store pages to load quickly at all times, so that I can browse and shop without delays.
-
 ## Technologies
 
 Frontend: ReactJS
