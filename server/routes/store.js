@@ -14,7 +14,6 @@ router.get("/", async (req, res) => {
 
 router.post("/addFruit", validateToken, async (req, res) => {
   const addFruit = req.body;
-  console.log(addFruit)
 
   const transaction = await sequelize.transaction();
 
@@ -55,13 +54,13 @@ router.post("/deleteFruit", validateToken, async (req, res) => {
 });
 
 router.post("/updateQuantity", validateToken, async (req, res) => {
-  const { fruitId, newQuantity } = req.body;
+  const { fruitId, stockQuantity } = req.body;
   try {
     const role = req.user.role;
 
     if (role === "admin") {
       await Fruits.update(
-        { stock: newQuantity },
+        { stock: stockQuantity },
         { where: { id: fruitId } }
       );
       res.status(200).json({ message: `Successfully Updated Stock for Fruit ID ${fruitId}`});

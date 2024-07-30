@@ -9,7 +9,6 @@ router.post("/submitOrder", validateToken, async (req, res) => {
 
   try {
     const { usersId, fruitsOrdered, total_price_cents } = req.body;
-    console.log(fruitsOrdered);
     
     // Create a new order
     const newOrder = await Orders.create(
@@ -65,7 +64,7 @@ router.post("/submitOrder", validateToken, async (req, res) => {
     // if there are errors while executing the order, rollback changes made to database
     await transaction.rollback();
     const statusCode = error.statusCode || 500;
-    res.status(statusCode).json({ message: error.message || "An unexpected error occurred. Please try again later." });
+    res.status(statusCode).json({ message: "An unexpected error occurred. Please try again later." });
   }
 });
 
@@ -94,7 +93,6 @@ router.get('/orderHistory', validateToken, async (req, res) => {
 
     res.status(200).json(orders);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Failed to retrieve order history' });
   }
 });
@@ -131,7 +129,6 @@ router.get('/orderFulfillmentList', validateToken, async (req, res) => {
       res.status(401).json({ message: "Unauthorised access." })
     };
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Failed to retrieve order history' });
   }
 });

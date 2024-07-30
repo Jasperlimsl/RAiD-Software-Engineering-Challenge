@@ -123,7 +123,7 @@ function Store() {
             if (fruit && orderQuantity[fruitId] > 0) {
               return (
                 <li key={fruitId}>
-                  {fruit.name}: {orderQuantity[fruitId]} @ ${(fruit.price_cents / 100).toFixed(2)} each
+                  {fruit.name}: {orderQuantity[fruitId]} at ${(fruit.price_cents / 100).toFixed(2)} each
                 </li>
               );
             }
@@ -131,7 +131,7 @@ function Store() {
           })}
         </ol>
         <div>Total Price: ${(Math.round(totalOrderPrice) / 100).toFixed(2)}</div>
-        {authState.status && <button className="submit-button" onClick={handleSubmit}>Submit Order</button>}
+        {authState.status ? <button className="submit-button" onClick={handleSubmit}>Submit Order</button> : <span className="errors">Please Login to Order</span>}
       </div>
     </div>
   )
